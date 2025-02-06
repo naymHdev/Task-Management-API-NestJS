@@ -8,7 +8,7 @@ import {
 
 export class CreateUserDto {
   @IsInt()
-  id: number;
+  id: string;
 
   @IsString()
   @IsNotEmpty()

@@ -4,11 +4,13 @@ import {
   IsEnum,
   IsInt,
   IsString,
+  IsUUID,
 } from 'class-validator';
 
 export class CreateTaskDto {
   @IsOptional()
-  id?: number;
+  @IsUUID('4', { message: 'id must be a valid UUID' })
+  id?: string;
 
   @IsString()
   @IsNotEmpty()
@@ -25,7 +27,7 @@ export class CreateTaskDto {
 
   @IsInt({ message: 'user_id must be an integer' })
   @IsNotEmpty()
-  user_id: number;
+  user_id: string;
 
   @IsOptional()
   created_at?: Date;

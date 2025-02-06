@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
@@ -46,6 +47,28 @@ export class UserService {
       };
     } catch (error) {
       throw new ConflictException(error.message);
+    }
+  }
+
+  // Deleted User
+  async deleteUser(id: string) {
+    try {
+      // Find user by ID
+      const user = await this.manager.findOneBy(UserEntity, { id });
+
+      if (!user) {
+        throw new Error('User not found');
+      }
+
+      // Delete user from database
+      await this.manager.delete(UserEntity, user);
+
+      return {
+        message: 'User deleted successfully',
+        userId: id,
+      };
+    } catch (error) {
+      throw new Error(error.message || 'Failed to delete user');
     }
   }
 }
